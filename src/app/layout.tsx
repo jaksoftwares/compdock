@@ -4,7 +4,7 @@ import "../styles/global.css";
 import { ReactNode } from "react";
 import Head from "next/head";
 import Header from "@/components/layout/Header";
-import Sidebar from "@/components/layout/Sidebar";
+// import Sidebar from "@/components/layout/Sidebar";
 import Footer from "@/components/layout/Footer";
 
 const Layout = ({ children }: { children: ReactNode }) => {
@@ -48,11 +48,11 @@ const Layout = ({ children }: { children: ReactNode }) => {
           <div className="flex flex-1">
             {/* Sidebar (Hidden on Mobile) */}
             <div className="hidden md:block">
-              <Sidebar />
+              {/* <Sidebar /> */}
             </div>
 
             {/* Main Content */}
-            <main className="flex-1 p-4 md:ml-72">{children}</main>
+            <main className="flex-1 p-4 md:mx-auto">{children}</main>
           </div>
 
           {/* Footer */}
