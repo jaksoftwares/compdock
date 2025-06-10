@@ -3,11 +3,11 @@ import { products } from "@/constants/products";
 import Image from "next/image";
 import { Star } from "lucide-react";
 
-interface ProductPageProps {
+type ProductPageProps = {
   params: {
     id: string;
   };
-}
+};
 
 export default function ProductPage({ params }: ProductPageProps) {
   const product = products.find((p) => p.id === params.id);
@@ -15,7 +15,7 @@ export default function ProductPage({ params }: ProductPageProps) {
   if (!product) return notFound();
 
   return (
-    <main className="max-w-5xl mx-auto px-6 py-12">
+    <main className="max-w-5xl mx-auto px-6 py-12 mt-8">
       <div className="grid md:grid-cols-2 gap-12">
         {/* Image */}
         <div className="relative w-full h-[400px] md:h-[500px]">
@@ -58,7 +58,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                 <span className="block font-medium">Vendor: {product.shop?.name || "Tech Shop"}</span>
                 <span className="block">Contact: {product.shop?.contact || "N/A"}</span>
                 <span className="block">Location: {product.shop?.location || "Nairobi"}</span>
-                </li>
+              </li>
               <li>Availability: In Stock</li>
               <li>Delivery: 1-3 working days within Nairobi</li>
             </ul>

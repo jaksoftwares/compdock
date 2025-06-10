@@ -17,6 +17,7 @@ export interface Product {
   rating: number;
   inStock: boolean;
   createdAt: string;
+  discountedPriceKES?: number; // Optional field for discounted price
 }
 
 export const products: Product[] = [
