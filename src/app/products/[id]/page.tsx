@@ -4,13 +4,12 @@ import Image from "next/image";
 import { Star } from "lucide-react";
 
 type ProductPageProps = {
-  params: {
-    id: string;
-  };
+  params: { id: string };
 };
 
 export default function ProductPage({ params }: ProductPageProps) {
-  const product = products.find((p) => p.id === params.id);
+  const id = params.id;
+  const product = products.find((p) => p.id === id);
 
   if (!product) return notFound();
 
@@ -60,7 +59,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                 <span className="block">Location: {product.shop?.location || "Nairobi"}</span>
               </li>
               <li>Availability: In Stock</li>
-              <li>Delivery: 1-3 working days within Nairobi</li>
+              <li>Delivery: 1–3 working days within Nairobi</li>
             </ul>
           </div>
         </div>
