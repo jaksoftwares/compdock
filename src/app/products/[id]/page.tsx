@@ -1,14 +1,20 @@
-import { notFound } from "next/navigation";
+"use client";
+
+import { useParams } from "next/navigation";
 import { products } from "@/constants/products";
+import { notFound } from "next/navigation";
 import Image from "next/image";
 import { Star } from "lucide-react";
 
-type ProductPageProps = {
-  params: { id: string };
-};
+export default function ProductPage() {
+  const params = useParams();
 
-export default function ProductPage({ params }: ProductPageProps) {
-  const id = params.id;
+  // ✅ Ensure `id` is always a string
+  const rawId = params?.id;
+  const id = Array.isArray(rawId) ? rawId[0] : rawId;
+
+  if (!id) return notFound();
+
   const product = products.find((p) => p.id === id);
 
   if (!product) return notFound();
