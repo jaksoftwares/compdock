@@ -29,6 +29,7 @@ export default function Home() {
 
   return (
     <main className="w-full">
+      {/* Category Sidebar */}
       {/* Hero Section */}
       <section className="relative w-full h-[500px] flex items-center justify-center bg-black text-white">
         <div className="absolute inset-0 -z-10">

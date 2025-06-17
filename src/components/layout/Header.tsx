@@ -3,7 +3,16 @@
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { useState } from "react";
-import { Menu, ShoppingCart, User, X, Search } from "lucide-react";
+import {
+  Menu,
+  ShoppingCart,
+  User,
+  X,
+  Search,
+  Heart,
+  ListOrdered,
+  LogIn,
+} from "lucide-react";
 import clsx from "clsx";
 
 const navLinks = [
@@ -17,7 +26,8 @@ const Header = () => {
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const cartCount = 3; // Replace with dynamic state/store integration
+  const [accountDropdown, setAccountDropdown] = useState(false);
+  const cartCount = 3; // Replace with actual cart count logic
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,7 +48,7 @@ const Header = () => {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-8">
-          {navLinks.map(link => (
+          {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
@@ -57,32 +67,80 @@ const Header = () => {
           {/* Search Bar */}
           <form
             onSubmit={handleSearch}
-            className="hidden md:flex items-center bg-white px-3 py-1 rounded-full focus-within:ring-2 focus-within:ring-[#ffcc00] transition"
+            className="hidden md:flex items-center bg-white px-4 py-1 rounded-full focus-within:ring-2 focus-within:ring-[#ffcc00] transition w-96"
           >
-            <Search className="w-5 h-5 text-[#ff6f00]" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search products..."
-              className="ml-2 w-40 bg-transparent text-black outline-none placeholder-gray-500"
-              aria-label="Search products"
+              placeholder="Search products, brands and categories"
+              className="flex-grow bg-transparent text-black outline-none placeholder-gray-500"
+              aria-label="Search"
             />
+            <button type="submit" className="ml-2 text-[#ff6f00] hover:text-[#e65c00]">
+              <Search className="w-5 h-5" />
+            </button>
           </form>
 
-          {/* Cart Icon */}
-          <Link href="/cart" className="relative" aria-label="Cart">
-            <ShoppingCart className="w-7 h-7 hover:text-[#ffcc00]" />
+          {/* Account with dropdown */}
+          <div className="relative">
+            <button
+              onClick={() => setAccountDropdown(!accountDropdown)}
+              className="flex items-center gap-1 hover:text-[#ffcc00] focus:outline-none"
+              aria-label="Account"
+            >
+              <User className="w-6 h-6" />
+              <span className="hidden md:inline text-sm font-medium">Account</span>
+            </button>
+
+            {accountDropdown && (
+              <div className="absolute right-0 mt-2 w-48 bg-white text-black rounded-md shadow-lg z-50 py-2">
+                <Link
+                  href="/auth/login"
+                  className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100"
+                >
+                  <LogIn className="w-4 h-4" />
+                  Sign In
+                </Link>
+                <Link
+                  href="/account"
+                  className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100"
+                >
+                  <User className="w-4 h-4" />
+                  My Account
+                </Link>
+                <Link
+                  href="/orders"
+                  className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100"
+                >
+                  <ListOrdered className="w-4 h-4" />
+                  Orders
+                </Link>
+                <Link
+                  href="/wishlist"
+                  className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100"
+                >
+                  <Heart className="w-4 h-4" />
+                  Wishlist
+                </Link>
+              </div>
+            )}
+          </div>
+
+          {/* Cart */}
+          <Link
+            href="/cart"
+            className="relative flex items-center gap-1 hover:text-[#ffcc00]"
+            aria-label="Cart"
+          >
+            <ShoppingCart className="w-6 h-6" />
             {cartCount > 0 && (
               <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs px-1.5 py-0.5 rounded-full font-semibold">
                 {cartCount}
               </span>
             )}
-          </Link>
-
-          {/* User */}
-          <Link href="/auth/login" className="hover:text-[#ffcc00]" aria-label="Login">
-            <User className="w-7 h-7" />
+            <span className="hidden md:inline text-sm font-medium">Cart</span>
+            
           </Link>
 
           {/* Mobile Menu Toggle */}
@@ -114,20 +172,20 @@ const Header = () => {
               </Link>
             ))}
             <Link href="/auth/login" onClick={() => setMenuOpen(false)}>
-              Login
+              Sign In
             </Link>
 
             {/* Mobile Search */}
             <form
               onSubmit={handleSearch}
-              className="mt-4 flex items-center bg-gray-100 px-3 py-2 rounded-full"
+              className="mt-4 flex items-center bg-gray-100 px-4 py-2 rounded-full"
             >
               <Search className="w-5 h-5 text-[#ff6f00]" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search products..."
+                placeholder="Search products, brands and categories"
                 className="ml-2 flex-1 bg-transparent outline-none placeholder-gray-500 text-black"
               />
             </form>
