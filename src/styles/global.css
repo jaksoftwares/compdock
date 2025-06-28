@@ -1,5 +1,8 @@
 /* src/styles/globals.css */
 
+@import "slick-carousel/slick/slick.css";
+@import "slick-carousel/slick/slick-theme.css";
+
 /* Tailwind imports */
 @tailwind base;
 @tailwind components;

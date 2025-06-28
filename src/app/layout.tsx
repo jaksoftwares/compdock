@@ -6,6 +6,8 @@ import Head from "next/head";
 import Header from "@/components/layout/Header";
 // import Sidebar from "@/components/layout/Sidebar";
 import Footer from "@/components/layout/Footer";
+import TopBanner from "@/components/layout/Banner";
+import SellerPromotionBanner from "@/components/layout/SellerPromotionalBanner";
 
 const Layout = ({ children }: { children: ReactNode }) => {
   return (
@@ -42,10 +44,17 @@ const Layout = ({ children }: { children: ReactNode }) => {
 
       <body className="bg-gray-100 text-gray-900">
         <div className="flex flex-col min-h-screen">
+          {/* Top Banner */}
+          <div className="top-0 fixed z-50 w-full" >
+          <TopBanner />
+          {/* Seller Promotion Banner */}
+          <SellerPromotionBanner />
           {/* Header */}
           <Header />
+          </div>
 
-          <div className="flex flex-1">
+          <div className="">
+             {/* <div className="flex flex-1"> */}
             {/* Sidebar (Hidden on Mobile) */}
             <div className="hidden md:block">
               {/* <Sidebar /> */}

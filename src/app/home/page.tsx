@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
+
 const featuredProducts = [
   { id: 1, name: "Mechanical Keyboard", price: 129.99, image: "/image4.jpg" },
   { id: 2, name: "Gaming Mouse", price: 79.99, image: "/image7.jpg" },

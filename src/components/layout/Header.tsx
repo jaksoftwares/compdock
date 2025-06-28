@@ -12,6 +12,7 @@ import {
   Heart,
   ListOrdered,
   LogIn,
+  HelpCircle,
 } from "lucide-react";
 import clsx from "clsx";
 
@@ -27,6 +28,7 @@ const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [accountDropdown, setAccountDropdown] = useState(false);
+  const [helpDropdown, setHelpDropdown] = useState(false);
   const cartCount = 3; // Replace with actual cart count logic
 
   const handleSearch = (e: React.FormEvent) => {
@@ -39,7 +41,7 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-[#ff6f00] text-white shadow-md fixed w-full top-0 z-50">
+    <header className="bg-[#ff6f00] text-white shadow-md w-full z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="text-2xl font-extrabold tracking-wide uppercase">
@@ -60,6 +62,8 @@ const Header = () => {
               {link.label}
             </Link>
           ))}
+
+          
         </nav>
 
         {/* Right Side */}
@@ -95,31 +99,19 @@ const Header = () => {
 
             {accountDropdown && (
               <div className="absolute right-0 mt-2 w-48 bg-white text-black rounded-md shadow-lg z-50 py-2">
-                <Link
-                  href="/auth/login"
-                  className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100"
-                >
+                <Link href="/auth/login" className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100">
                   <LogIn className="w-4 h-4" />
                   Sign In
                 </Link>
-                <Link
-                  href="/account"
-                  className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100"
-                >
+                <Link href="/account" className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100">
                   <User className="w-4 h-4" />
                   My Account
                 </Link>
-                <Link
-                  href="/orders"
-                  className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100"
-                >
+                <Link href="/orders" className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100">
                   <ListOrdered className="w-4 h-4" />
                   Orders
                 </Link>
-                <Link
-                  href="/wishlist"
-                  className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100"
-                >
+                <Link href="/wishlist" className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100">
                   <Heart className="w-4 h-4" />
                   Wishlist
                 </Link>
@@ -128,11 +120,7 @@ const Header = () => {
           </div>
 
           {/* Cart */}
-          <Link
-            href="/cart"
-            className="relative flex items-center gap-1 hover:text-[#ffcc00]"
-            aria-label="Cart"
-          >
+          <Link href="/cart" className="relative flex items-center gap-1 hover:text-[#ffcc00]" aria-label="Cart">
             <ShoppingCart className="w-6 h-6" />
             {cartCount > 0 && (
               <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs px-1.5 py-0.5 rounded-full font-semibold">
@@ -140,8 +128,43 @@ const Header = () => {
               </span>
             )}
             <span className="hidden md:inline text-sm font-medium">Cart</span>
-            
           </Link>
+          {/* Help Center Dropdown */}
+          <div className="relative">
+            <button
+              onClick={() => setHelpDropdown(!helpDropdown)}
+              className="flex items-center gap-1 hover:text-[#ffcc00] focus:outline-none"
+              aria-label="Help Center"
+            >
+              <HelpCircle className="w-5 h-5" />
+              <span className="text-sm font-medium">Help Center</span>
+            </button>
+
+            {helpDropdown && (
+              <div className="absolute right-0 mt-2 w-64 bg-white text-black rounded-md shadow-lg z-50 py-2">
+                <Link href="/help/place-order" className="block px-4 py-2 hover:bg-gray-100">
+                  Place your Order
+                </Link>
+                <Link href="/help/payment-options" className="block px-4 py-2 hover:bg-gray-100">
+                  Payment Options
+                </Link>
+                <Link href="/help/delivery-tracking" className="block px-4 py-2 hover:bg-gray-100">
+                  Delivery Timelines & Track your Order
+                </Link>
+                <Link href="/help/returns-refunds" className="block px-4 py-2 hover:bg-gray-100">
+                  Returns & Refunds
+                </Link>
+                <Link href="/help/warranty" className="block px-4 py-2 hover:bg-gray-100">
+                  Warranty
+                </Link>
+                <div className="px-4 py-2">
+                  <button className="w-full bg-[#ff6f00] text-white py-2 rounded-md hover:bg-[#e65c00] transition">
+                    Live Chat
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
 
           {/* Mobile Menu Toggle */}
           <button
@@ -174,8 +197,6 @@ const Header = () => {
             <Link href="/auth/login" onClick={() => setMenuOpen(false)}>
               Sign In
             </Link>
-
-            {/* Mobile Search */}
             <form
               onSubmit={handleSearch}
               className="mt-4 flex items-center bg-gray-100 px-4 py-2 rounded-full"
