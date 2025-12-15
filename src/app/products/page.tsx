@@ -3,8 +3,8 @@
 import { useState, useMemo } from "react";
 import Image from "next/image";
 import { products, categories } from "@/constants/products";
-import { Search, Star } from "lucide-react";
-import Link from "next/link";
+import { Search } from "lucide-react";
+import ProductCard from "@/components/product/ProductCard";
 
 export default function Shop() {
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -112,40 +112,18 @@ export default function Shop() {
             return (
               <div key={category} className="mb-12">
                 <h2 className="text-2xl font-bold text-gray-800 mb-6">{category}</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
                   {categoryProducts.map((product) => (
-                    <div
+                    <ProductCard
                       key={product.id}
-                      className="bg-white border rounded-lg p-4 shadow-md hover:shadow-xl transition duration-300 group"
-                    >
-                      <div className="relative w-full h-48">
-                        <Image
-                          src={product.imageUrl}
-                          alt={product.name}
-                          layout="fill"
-                          objectFit="cover"
-                          className="rounded-md group-hover:scale-105 transition-transform"
-                        />
-                      </div>
-                      <h3 className="mt-4 text-lg font-semibold text-gray-800">{product.name}</h3>
-                      <p className="text-blue-600 font-bold mt-1">
-                        KES {product.priceKES.toFixed(2)}
-                      </p>
-                      <div className="flex items-center text-yellow-500 mt-1">
-                        <Star size={16} className="mr-1" /> {product.rating}
-                      </div>
-                      <div className="mt-4 space-y-2">
-                      <button className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition">
-                        Add to Cart
-                      </button>
-                      <Link href={`/products/${product.id}`}>
-                        <button className="w-full border border-blue-600 text-blue-600 py-2 rounded-md hover:bg-blue-50 transition">
-                          View Product
-                        </button>
-                      </Link>
-                    </div>
-
-                    </div>
+                      id={product.id}
+                      name={product.name}
+                      priceKES={product.priceKES}
+                      imageUrl={product.imageUrl}
+                      rating={product.rating}
+                      shopName={product.shop.name}
+                      discountPercent={product.discountPercent}
+                    />
                   ))}
                 </div>
               </div>

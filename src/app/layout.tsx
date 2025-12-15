@@ -7,7 +7,7 @@ import Header from "@/components/layout/Header";
 // import Sidebar from "@/components/layout/Sidebar";
 import Footer from "@/components/layout/Footer";
 import TopBanner from "@/components/layout/Banner";
-import SellerPromotionBanner from "@/components/layout/SellerPromotionalBanner";
+import MobileBottomNav from "@/components/layout/MobileBottomNav";
 
 const Layout = ({ children }: { children: ReactNode }) => {
   return (
@@ -42,19 +42,14 @@ const Layout = ({ children }: { children: ReactNode }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <body className="bg-gray-100 text-gray-900">
+      <body className="bg-gray-100 text-gray-900 pb-16 md:pb-0">
         <div className="flex flex-col min-h-screen">
-          {/* Top Banner */}
-          <div className="top-0 fixed z-50 w-full" >
+          {/* Unified Top Bar (deals + seller promo) */}
           <TopBanner />
-          {/* Seller Promotion Banner */}
-          <SellerPromotionBanner />
-          {/* Header */}
+          {/* Header (sticky inside its own component) */}
           <Header />
-          </div>
 
           <div className="">
-             {/* <div className="flex flex-1"> */}
             {/* Sidebar (Hidden on Mobile) */}
             <div className="hidden md:block">
               {/* <Sidebar /> */}
@@ -66,6 +61,9 @@ const Layout = ({ children }: { children: ReactNode }) => {
 
           {/* Footer */}
           <Footer />
+
+          {/* Mobile bottom navigation */}
+          <MobileBottomNav />
         </div>
       </body>
     </html>
