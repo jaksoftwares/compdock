@@ -1,13 +1,14 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 import { useState, useMemo } from "react";
 import { products } from "@/constants/products";
 import VendorCard from "@/components/vendor/VendorCard";
 import ProductCard from "@/components/home/ProductCard";
 import EmptyState from "@/components/common/EmptyState";
 import { toSlug } from "@/lib/slug";
-import { Search, Store } from "lucide-react";
+import { Search } from "lucide-react";
 
 export default function SearchPage() {
   const searchParams = useSearchParams();
@@ -122,7 +123,7 @@ export default function SearchPage() {
       ) : (
         <section className="space-y-3">
           {vendors.map((v) => (
-            <a
+            <Link
               key={v.name}
               href={`/shop/${toSlug(v.name)}`}
               className="block"
@@ -133,7 +134,7 @@ export default function SearchPage() {
                 rating={v.rating}
                 totalProducts={v.count}
               />
-            </a>
+            </Link>
           ))}
         </section>
       )}

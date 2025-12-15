@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { Heart, Trash2, ShoppingCart } from "lucide-react";
 import { useState } from "react";
 
@@ -101,12 +102,12 @@ export default function WishlistPage() {
           <Heart className="w-12 h-12 mx-auto text-gray-300" />
           <h2 className="text-2xl font-semibold text-gray-700 mt-4">Your wishlist is empty</h2>
           <p className="text-gray-500 mb-4">Start saving your favorite products now!</p>
-          <a
-            href="/shop"
+          <Link
+            href="/products"
             className="inline-block px-6 py-3 bg-blue-600 text-white font-medium rounded-xl hover:bg-blue-700 transition"
           >
             Browse Products
-          </a>
+          </Link>
         </div>
       )}
     </main>

@@ -16,15 +16,6 @@ import {
 } from "lucide-react";
 import clsx from "clsx";
 
-const navLinks = [
-  { href: "/categories", label: "Categories" },
-  { href: "/products", label: "Products" },
-  { href: "/account/shops", label: "Vendors" },
-  { href: "/help/place-order", label: "Help" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
-];
-
 const Header = () => {
   const pathname = usePathname();
   const router = useRouter();

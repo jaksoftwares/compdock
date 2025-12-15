@@ -75,7 +75,9 @@ export default function CategorySlugPage() {
           {categoryNameFromSlug}
         </h1>
         {query && (
-          <p className="text-xs text-gray-500">Filtered by search: "{query}"</p>
+          <p className="text-xs text-gray-500">
+            Filtered by search: &quot;{query}&quot;
+          </p>
         )}
       </section>
 
