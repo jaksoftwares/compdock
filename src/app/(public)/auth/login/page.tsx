@@ -3,19 +3,25 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Mail, Lock, Loader2 } from "lucide-react";
+import { useAuth, UserRole } from "@/context/AuthContext";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState<UserRole>("user");
   const [showErrors, setShowErrors] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { login } = useAuth();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setShowErrors(true);
     if (!email || !password) return;
+
     setIsSubmitting(true);
-    setTimeout(() => setIsSubmitting(false), 1200);
+    // Accept any credentials; set auth state client-side
+    login({ email, password, role });
+    setTimeout(() => setIsSubmitting(false), 400);
   };
 
   const emailError = showErrors && !email ? "Email is required" : "";
@@ -46,6 +52,45 @@ export default function LoginPage() {
                 aria-invalid={!!emailError}
               />
             </div>
+
+          <div className="space-y-1">
+            <span className="text-xs font-medium text-gray-700">Login as</span>
+            <div className="flex flex-wrap gap-3 text-xs">
+              <label className="inline-flex items-center gap-1">
+                <input
+                  type="radio"
+                  name="role"
+                  value="user"
+                  checked={role === "user"}
+                  onChange={() => setRole("user")}
+                  className="h-3 w-3"
+                />
+                <span>Buyer</span>
+              </label>
+              <label className="inline-flex items-center gap-1">
+                <input
+                  type="radio"
+                  name="role"
+                  value="vendor"
+                  checked={role === "vendor"}
+                  onChange={() => setRole("vendor")}
+                  className="h-3 w-3"
+                />
+                <span>Vendor (approved)</span>
+              </label>
+              <label className="inline-flex items-center gap-1">
+                <input
+                  type="radio"
+                  name="role"
+                  value="admin"
+                  checked={role === "admin"}
+                  onChange={() => setRole("admin")}
+                  className="h-3 w-3"
+                />
+                <span>Admin</span>
+              </label>
+            </div>
+          </div>
             {emailError && <p className="text-xs text-red-600">{emailError}</p>}
           </div>
 

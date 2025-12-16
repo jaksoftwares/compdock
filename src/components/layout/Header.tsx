@@ -240,7 +240,7 @@ const Header = () => {
                   </li>
                   <li>
                     <Link
-                      href="/vendor/register"
+                      href="/vendor/apply"
                       onClick={() => setMenuOpen(false)}
                       className="font-medium hover:text-[#ff6f00]"
                     >
