@@ -77,7 +77,7 @@ export default function VendorAnalyticsPage() {
                 <p className="text-slate-300">KES 120,000</p>
               </div>
               <div className="flex items-center justify-between">
-                <p className="text-slate-100">Dell UltraSharp 27" 4K Monitor</p>
+                <p className="text-slate-100">Dell UltraSharp 27&quot; 4K Monitor</p>
                 <p className="text-slate-300">KES 98,500</p>
               </div>
               <div className="flex items-center justify-between">

@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Package, Plus, Filter } from "lucide-react";
 
@@ -78,7 +77,7 @@ export default function VendorProductsPage() {
             <button
               key={product.id}
               onClick={() => router.push(`/vendor/products/${product.id}/edit`)}
-              className="w-full text-left py-3 px-2 hover:bg-slate-900/80 flex flex-col md:grid md:grid-cols-[2fr,0.8fr,0.6fr,0.8fr,0.7fr] gap-2 items-center md:items-center"
+              className="w-full text-left py-3 px-2 hover:bg-slate-900/80 flex flex-col md:grid md:grid-cols-[2fr,0.8fr,0.6fr,0.8fr,0.7fr] gap-2 items-start md:items-center"
             >
               <div className="flex items-start gap-2 w-full">
                 <div className="mt-0.5 hidden md:block">

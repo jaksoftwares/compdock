@@ -28,6 +28,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(false);
 
   const login = ({ email, password, role }: { email: string; password: string; role: UserRole }) => {
+    void password;
     const baseName = email.split("@")[0];
 
     const vendorStatus: VendorStatus =
