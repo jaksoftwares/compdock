@@ -2,7 +2,7 @@ export const flashSalesProducts = [
   {
     id: "1",
     name: "HP EliteBook 840 G3 - Core i7, 8GB RAM, 500GB HDD",
-    imageUrl: "/image5.jpg",
+    imageUrl: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=300&fit=crop",
     price: 35000,
     oldPrice: 45000,
     discountPercent: 22,
@@ -12,7 +12,7 @@ export const flashSalesProducts = [
   {
     id: "2",
     name: "Logitech Wireless Mouse M185",
-    imageUrl: "/image4.jpg",
+    imageUrl: "https://images.unsplash.com/photo-1527814050087-3793815479db?w=400&h=300&fit=crop",
     price: 1500,
     oldPrice: 2500,
     discountPercent: 40,
@@ -22,7 +22,7 @@ export const flashSalesProducts = [
   {
     id: "3",
     name: "Samsung 24'' LED Monitor",
-    imageUrl: "/image3.jpg",
+    imageUrl: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=400&h=300&fit=crop",
     price: 18000,
     oldPrice: 22000,
     discountPercent: 18,
@@ -32,7 +32,7 @@ export const flashSalesProducts = [
   {
     id: "4",
     name: "Oraimo Smartwatch OSW-16",
-    imageUrl: "/image2.jpg",
+    imageUrl: "https://images.unsplash.com/photo-1544117519-31a4b719223d?w=400&h=300&fit=crop",
     price: 4500,
     oldPrice: 7000,
     discountPercent: 36,
@@ -42,7 +42,7 @@ export const flashSalesProducts = [
   {
     id: "5",
     name: "TP-Link WiFi Range Extender",
-    imageUrl: "/image1.jpg",
+    imageUrl: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop",
     price: 2500,
     oldPrice: 4000,
     discountPercent: 38,

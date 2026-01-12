@@ -1,78 +1,86 @@
-// components/Breadcrumb.tsx
-import { Category, categories } from '@/constants/categories';
+'use client';
+
 import Link from 'next/link';
+import { ChevronRight, Home } from 'lucide-react';
+import { Category } from '@/constants/categories';
+import { categoryIdToSlug, getCategoryBreadcrumbs } from '@/lib/categoryUtils';
 
 interface BreadcrumbProps {
-  currentCategoryId?: string | null; 
+  categoryId?: string | null;
+  breadcrumbs?: Category[];
 }
 
-const Breadcrumb = ({ currentCategoryId }: BreadcrumbProps) => {
-  // Function to find the breadcrumb path for a category
-  const findBreadcrumbPath = (id: string, categories: Category[], path: Category[] = []): Category[] | null => {
-    for (const category of categories) {
-      // If we found the category, return the current path + this category
-      if (category.id === id) {
-        return [...path, category];
-      }
-      
-      // If this category has children, search recursively
-      if (category.children) {
-        const newPath = [...path, category];
-        const found = findBreadcrumbPath(id, category.children, newPath);
-        if (found) return found;
-      }
+export default function Breadcrumb({ categoryId, breadcrumbs: providedBreadcrumbs }: BreadcrumbProps) {
+  // Use provided breadcrumbs or fetch them
+  let breadcrumbs = providedBreadcrumbs || [];
+  let currentCategory: Category | null = null;
+
+  if (categoryId && !providedBreadcrumbs) {
+    breadcrumbs = getCategoryBreadcrumbs(categoryId);
+    if (breadcrumbs.length > 0) {
+      currentCategory = breadcrumbs[breadcrumbs.length - 1];
+      breadcrumbs = breadcrumbs.slice(0, -1);
     }
-    return null;
-  };
+  }
 
-  // Get the breadcrumb path for the current category
-  const breadcrumbPath = currentCategoryId 
-    ? findBreadcrumbPath(currentCategoryId, categories) 
-    : null;
-
-  // If no category is selected, show home only
-  if (!breadcrumbPath || breadcrumbPath.length === 0) {
+  if (breadcrumbs.length === 0 && !currentCategory) {
     return (
-      <div className="bg-white border-b border-gray-200 py-3 px-4">
-        <nav className="flex items-center space-x-2 text-sm">
-          <Link href="/" className="text-blue-600 hover:text-blue-800 transition-colors">
-            Home
+      <nav className="bg-gray-50 py-3 px-4 sm:px-6 lg:px-8 border-b border-gray-200">
+        <div className="flex items-center space-x-1 text-sm text-gray-600">
+          <Link
+            href="/"
+            className="flex items-center hover:text-orange-600 transition-colors"
+          >
+            <Home className="w-4 h-4" />
+            <span className="ml-1 hidden sm:inline">Home</span>
           </Link>
-          <span className="text-gray-300">/</span>
-          <span className="text-gray-500">All Categories</span>
-        </nav>
-      </div>
+        </div>
+      </nav>
     );
   }
 
+  // Build paths progressively
+  const allItems = [...breadcrumbs];
+  if (currentCategory) {
+    allItems.push(currentCategory);
+  }
+
+  const breadcrumbItems = allItems.map((item, index) => {
+    const slugs = allItems.slice(0, index + 1).map((cat) => categoryIdToSlug(cat.id));
+    const href = `/categories/${slugs.join('/')}`;
+    return { ...item, href, isLast: index === allItems.length - 1 };
+  });
+
   return (
-    <div className="bg-white border-b border-gray-200 py-3 px-4">
-      <nav className="flex items-center flex-wrap gap-2">
-        <Link href="/" className="text-blue-600 hover:text-blue-800 transition-colors">
-          Home
+    <nav className="bg-gray-50 py-3 px-4 sm:px-6 lg:px-8 border-b border-gray-200">
+      <div className="flex items-center space-x-1 text-sm text-gray-600 flex-wrap">
+        {/* Home link */}
+        <Link
+          href="/"
+          className="flex items-center hover:text-orange-600 transition-colors"
+          title="Go to homepage"
+        >
+          <Home className="w-4 h-4" />
+          <span className="ml-1 hidden sm:inline">Home</span>
         </Link>
-        <span className="text-gray-300">/</span>
-        
-        {breadcrumbPath.map((category, index) => (
-          <div key={category.id} className="flex items-center gap-2">
-            {index === breadcrumbPath.length - 1 ? (
-              <span className="text-gray-900 font-medium">{category.name}</span>
+
+        {/* Breadcrumb items */}
+        {breadcrumbItems.map((item, index) => (
+          <div key={item.id} className="flex items-center">
+            <ChevronRight className="w-4 h-4 mx-1 text-gray-400" />
+            {item.isLast ? (
+              <span className="text-gray-900 font-medium truncate">{item.name}</span>
             ) : (
-              <>
-                <Link 
-                  href={`/category/${category.id}`} 
-                  className="text-blue-600 hover:text-blue-800 transition-colors"
-                >
-                  {category.name}
-                </Link>
-                <span className="text-gray-300">/</span>
-              </>
+              <Link
+                href={item.href}
+                className="hover:text-orange-600 transition-colors truncate"
+              >
+                {item.name}
+              </Link>
             )}
           </div>
         ))}
-      </nav>
-    </div>
+      </div>
+    </nav>
   );
-};
-
-export default Breadcrumb;
+}

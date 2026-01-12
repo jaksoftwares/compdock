@@ -2,7 +2,7 @@
 
 "use client";
 
-import Hero from "@/components/home/Hero";
+// import Hero from "@/components/home/Hero";
 import FeaturedCategories from "@/components/home/FeaturedCategories";
 import FeaturedProducts from "@/components/home/FeaturedProducts";
 import PromotionalBanner from "@/components/home/PromotionalBanner";
@@ -117,7 +117,7 @@ const Homepage = () => {
       
    
       {/* Hero Section */}
-      <Hero />
+      {/* <Hero /> */}
 
          {/* Category Sidebar */}
       <CategorySidebar />

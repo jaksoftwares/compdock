@@ -82,13 +82,13 @@ export const categories: Category[] = [
             children: [
               { id: "external-hdd", name: "External HDDs" },
               { id: "external-ssd", name: "External SSDs" },
-              { id: "nas", name: "NAS Devices" }, // Added
-              { id: "das", name: "DAS Devices" }, // Added
+              { id: "nas", name: "NAS Devices" },
+              { id: "das", name: "DAS Devices" },
             ]
           },
           { id: "flash-drives", name: "USB Flash Drives" },
           { id: "memory-cards", name: "Memory Cards" },
-          { id: "optical-drives", name: "Optical Drives" }, // Added
+          { id: "optical-drives", name: "Optical Drives" },
         ],
       },
       // Input Devices (expanded)
