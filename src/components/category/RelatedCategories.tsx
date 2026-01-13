@@ -6,14 +6,14 @@ import { categoryIdToSlug } from '@/lib/categoryUtils';
 import { ChevronRight } from 'lucide-react';
 
 interface RelatedCategoriesProps {
-  children?: Category[];
+  categories?: Category[];
   related?: Category[];
   title?: string;
   showViewMore?: boolean;
 }
 
 export default function RelatedCategories({
-  children,
+  categories: children,
   related,
   title,
   showViewMore = true,

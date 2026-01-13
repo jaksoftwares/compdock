@@ -100,8 +100,6 @@ export function getLeafCategories(): Category[] {
  */
 export function getCategoriesByDepth(depth: number): Category[] {
   const result: Category[] = [];
-  let currentLevel = categories;
-  let currentDepth = 0;
 
   if (depth === 0) {
     return categories;

@@ -15,6 +15,7 @@ import CategorySidebar from "@/components/category/CategorySidebar";
 import FlashSalesSection from "@/components/layout/FlashSalesSection";
 import { flashSalesProducts } from "@/constants/flashSalesProducts";
 import ProductCarouselSection from "@/components/layout/ProductsCarouselSection";
+import Breadcrumb from "@/components/category/Breadcrumb";
 
 const sponsoredProducts = [
   {
@@ -114,8 +115,10 @@ const topPicksProducts = [
 const Homepage = () => {
   return (
     <div>
-      
-   
+
+      {/* Breadcrumb */}
+      <Breadcrumb />
+
       {/* Hero Section */}
       {/* <Hero /> */}
 

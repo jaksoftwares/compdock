@@ -4,18 +4,16 @@ import { useMemo, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { products as allProducts } from '@/constants/products';
 import EmptyState from '@/components/common/EmptyState';
-import ProductCard from '@/components/home/ProductCard';
+import ProductCard from '@/components/product/ProductCard';
 import Breadcrumb from '@/components/category/Breadcrumb';
 import CategoryFiltersPanel from '@/components/category/CategoryFiltersPanel';
 import RelatedCategories from '@/components/category/RelatedCategories';
 import {
   parseSlugToCategory,
-  getCategoryBreadcrumbs,
   getCategoryChildren,
   hasCategoryChildren,
   getCategoryDescription,
   getCategoryUrl,
-  categoryIdToSlug,
 } from '@/lib/categoryUtils';
 import { Menu, X } from 'lucide-react';
 
@@ -44,34 +42,18 @@ export default function CategoryPage() {
   const [currentPage, setCurrentPage] = useState(1);
 
   // Parse slug to category
-  const slugArray = Array.isArray(params?.slug) ? params.slug : [params?.slug];
-  const category = useMemo(() => parseSlugToCategory(slugArray), [slugArray]);
-  const breadcrumbs = useMemo(
-    () => (category ? getCategoryBreadcrumbs(category.id) : []),
-    [category]
-  );
+  const category = useMemo(() => {
+    const slugArray = params?.slug ? Array.isArray(params.slug) ? params.slug : [params.slug] : [];
+    return parseSlugToCategory(slugArray);
+  }, [params?.slug]);
   const categoryChildren = useMemo(
     () => (category && hasCategoryChildren(category.id) ? getCategoryChildren(category.id) : []),
     [category]
   );
 
-  // If category not found, show 404
-  if (!category) {
-    return (
-      <div className="min-h-screen bg-gray-50">
-        <Breadcrumb />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <EmptyState
-            title="Category Not Found"
-            description="We couldn't find the category you're looking for."
-          />
-        </div>
-      </div>
-    );
-  }
-
   // Filter products based on category and filters
   const filteredProducts = useMemo(() => {
+    if (!category) return [];
     let items = allProducts.filter((p) =>
       p.category.toLowerCase().includes(category.name.toLowerCase())
     );
@@ -117,7 +99,22 @@ export default function CategoryPage() {
     }
 
     return sorted;
-  }, [category.name, priceRange, selectedBrands, selectedRating, sortBy]);
+  }, [category, priceRange, selectedBrands, selectedRating, sortBy]);
+
+  // If category not found, show 404
+  if (!category) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <Breadcrumb />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <EmptyState
+            title="Category Not Found"
+            description="We couldn't find the category you're looking for."
+          />
+        </div>
+      </div>
+    );
+  }
 
   // Pagination
   const itemsPerPage = 12;
@@ -129,7 +126,6 @@ export default function CategoryPage() {
 
   const categoryDescription = getCategoryDescription(category);
   const hasChildren = categoryChildren.length > 0;
-  const breadcrumbItems = breadcrumbs.slice(0, -1); // All except the current category
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -158,7 +154,6 @@ export default function CategoryPage() {
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
               {categoryChildren.slice(0, 6).map((child) => {
-                const slug = categoryIdToSlug(child.id);
                 const href = getCategoryUrl(child.id);
                 return (
                   <a
@@ -251,7 +246,16 @@ export default function CategoryPage() {
               <>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
                   {paginatedProducts.map((product) => (
-                    <ProductCard key={product.id} product={product} />
+                    <ProductCard
+                      key={product.id}
+                      id={product.id}
+                      name={product.name}
+                      priceKES={product.priceKES}
+                      imageUrl={product.imageUrl}
+                      rating={product.rating}
+                      shopName={product.shop.name}
+                      discountPercent={product.discountPercent}
+                    />
                   ))}
                 </div>
 
@@ -325,7 +329,7 @@ export default function CategoryPage() {
         <div className="bg-white border-t border-gray-200 py-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <RelatedCategories
-              children={categoryChildren}
+              categories={categoryChildren}
               title="Explore Subcategories"
             />
           </div>

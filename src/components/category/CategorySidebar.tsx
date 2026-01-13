@@ -2,15 +2,17 @@
 "use client";
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 import { categories, Category } from '@/constants/categories';
-import Breadcrumb from './Breadcrumb';
 import DealsCarousel from './DealsCarousel';
 import { flashSalesProducts } from '@/constants/flashSalesProducts';
+import { getCategoryBreadcrumbs, categoryIdToSlug } from '@/lib/categoryUtils';
 
 const FLYOUT_DELAY = 200;
 const FLYOUT_WIDTH = 280;
 
 const CategorySidebar = () => {
+  const router = useRouter();
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
@@ -60,7 +62,15 @@ const CategorySidebar = () => {
     setSelectedCategory(categoryId);
     hideFlyout();
     setShowMobileMenu(false);
-  }, [hideFlyout]);
+    
+    // Navigate to the category page with proper slug
+    const breadcrumbs = getCategoryBreadcrumbs(categoryId);
+    if (breadcrumbs.length > 0) {
+      const slugs = breadcrumbs.map((cat) => categoryIdToSlug(cat.id));
+      const categoryUrl = `/categories/${slugs.join('/')}`;
+      router.push(categoryUrl);
+    }
+  }, [hideFlyout, router]);
 
   useEffect(() => {
     return () => clearHoverTimeout();
@@ -68,8 +78,6 @@ const CategorySidebar = () => {
 
   return (
     <div className="relative w-full min-h-screen flex flex-col bg-white">
-      <Breadcrumb currentCategoryId={selectedCategory} />
-      
       {/* Mobile Menu Toggle */}
       {isMobileView && (
         <div className="bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between">
@@ -115,7 +123,6 @@ const CategorySidebar = () => {
         {/* Main Content */}
         <MainContent
           selectedCategory={selectedCategory}
-          onCategoryClick={handleCategoryClick}
         />
       </div>
     </div>
@@ -418,7 +425,6 @@ const SubcategoryItem = ({ item, onCategoryClick }: SubcategoryItemProps) => {
 // Main Content Area
 interface MainContentProps {
   selectedCategory: string | null;
-  onCategoryClick: (id: string) => void;
 }
 
 const MainContent = ({ selectedCategory }: MainContentProps) => {

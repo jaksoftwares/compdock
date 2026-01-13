@@ -2,37 +2,38 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { getCategoryUrl } from "@/lib/categoryUtils";
 
 const categories = [
   {
     title: "Laptops",
     image: "/categories/laptop.jpg",
-    link: "/products?category=laptops",
+    categoryId: "laptops",
   },
   {
     title: "Desktops",
     image: "/categories/desktop.jpg",
-    link: "/products?category=desktops",
+    categoryId: "desktops",
   },
   {
     title: "Accessories",
     image: "/categories/accessories.jpg",
-    link: "/products?category=accessories",
+    categoryId: "accessories",
   },
   {
     title: "Gaming Gear",
     image: "/categories/gaming.jpg",
-    link: "/products?category=gaming",
+    categoryId: "gaming",
   },
   {
     title: "Networking",
     image: "/categories/networking.jpg",
-    link: "/products?category=networking",
+    categoryId: "networking",
   },
   {
     title: "Monitors",
     image: "/categories/monitor.jpg",
-    link: "/products?category=monitors",
+    categoryId: "monitors",
   },
 ];
 
@@ -48,7 +49,7 @@ const FeaturedCategories = () => {
           {categories.map((category) => (
             <Link
               key={category.title}
-              href={category.link}
+              href={getCategoryUrl(category.categoryId)}
               className="relative group rounded-xl overflow-hidden shadow hover:shadow-lg transition duration-300"
             >
               <Image
